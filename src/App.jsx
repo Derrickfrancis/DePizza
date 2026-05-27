@@ -1,39 +1,52 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./ui/Home";
-import Menu from "./features/menu/Menu";
-import Cart from "./features/cart/Cart";
-import Order from "./features/order/Order";
-import CreateOrder from "./features/order/CreateOrder";
-import CreateUser from "./features/user/CreateUser";
-import AppLayout from "./ui/AppLayout";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './ui/Home';
+import AppLayout from './ui/AppLayout';
+import Error from './ui/Error';
+import Menu from './features/menu/Menu';
+import { loader as menuLoader } from './features/menu/menuLoader';
+import Cart from './features/cart/Cart';
+import Order from './features/order/Order';
+import CreateOrder from './features/order/CreateOrder';
+import { action as updateOrderAction } from './features/order/UpdateOrderAction.js';
+import { action as createOrderAction } from './features/order/createOrderAction.js';
+import CreateUser from './features/user/CreateUser';
+import { orderLoader } from './features/order/orderLoader';
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <Error />,
+
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "/menu",
+        path: '/menu',
         element: <Menu />,
+        loader: menuLoader,
+        errorElement: <Error />,
       },
       {
-        path: "/cart",
+        path: '/cart',
         element: <Cart />,
       },
       {
-        path: "/order",
-        element: <Order />,
+        path: '/order/new',
+        element: <CreateOrder />,
+        action: createOrderAction,
       },
       {
-        path: "/order/new",
-        element: <CreateOrder />,
+        path: '/order/:orderId',
+        element: <Order />,
+        loader: orderLoader,
+        errorElement: <Error />,
+        action: updateOrderAction,
       },
 
       {
-        path: "/user",
+        path: '/user',
         element: <CreateUser />,
       },
     ],

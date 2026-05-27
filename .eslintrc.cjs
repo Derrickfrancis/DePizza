@@ -7,15 +7,16 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: ["dist", ".eslintrc.cjs", "prettier.config.cjs"],
   parserOptions: { ecmaVersion: "latest", sourceType: "module" },
   settings: { react: { version: "18.2" } },
   plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": [
-      "error",
+      "warn",
       { allowConstantExport: true },
     ],
     "no-unused-vars": "warn",
+    "react/prop-types": "off",
   },
 };
